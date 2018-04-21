@@ -17,7 +17,7 @@ C.initial_conditions(100, 100)
 C.make_animation()
 
 ```
-![](docs/animation-still.png)
+![](docs/cogl1000g10s.gif)
 
 ## Install
 
