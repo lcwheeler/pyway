@@ -12,7 +12,6 @@ class Game(object):
         """Instantiate an instance of the cluster_set class"""
 
         self.grid = None
-        #self.new_grid = None
         self.options = 2
 
 
