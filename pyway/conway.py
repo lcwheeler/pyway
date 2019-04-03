@@ -6,29 +6,54 @@ from numba import jit
 
 class Game(object): 
 
-    """Object class that simulates Conway's Game of Life and produces an animation."""
+    """Object class that simulates Conway's Game of Life and produces an animation. User can input an initial configuration or allow the object to generate a random initialization."""
 
-    def __init__(self):
-        """Instantiate an instance of the cluster_set class"""
+    def __init__(self, user_grid = None):
+        """Initialize an instance of the Game class. 
 
-        self.grid = None
+        Parameters
+
+        ---------- 
+
+        user_grid: 2D array like
+            User input initial conditions
+            
+        """
+
+        # Allow user to input a custom configuration
+        if user_grid != None:
+            self.grid = user_grid
+        else:
+            self.grid = None
+
         self.options = 2
 
 
     def initial_conditions(self, size1, size2):
-        """Generate a random arrangement of the game grid."""
+        """Generate a random arrangement of the game grid.
 
-        #the number of possible states. For Conway's game of life this is two (0 and 1). 
+        Parameters
+
+        ----------
+
+        size1: int
+            length of 1st grid dimension
+        size2: int
+            length of 2nd grid dimension
+
+        """
+
+        # The number of possible states. For Conway's game of life this is two (0 and 1). 
         if self.options != 2:
             raise Exception('The game only has two states!')
 
-        #generate the grid using np.random.randint with the sizes equal to desired dimensions of array. 
+        # Generate the grid using np.random.randint with the sizes equal to desired dimensions of array. 
         grid = np.random.randint(self.options, high=None, size=(size1,size2))
         self.grid = grid
 
     @jit
     def conway(self):
-        """Function that applies the rules of Conway's game of life on an initialized 2D array"""
+        """Function that applies the rules of Conway's game of life on an initialized 2D array."""
 
 
         # Create an identical copy of the grid, which will become the grid of the next generation. 
@@ -61,7 +86,28 @@ class Game(object):
     def make_animation(self, generations=100, Cmap='BuGn', interval=700, repeat_delay=1000, 
                         blit=True, name="Conway_animation", export=True):
     
-        """This function will iterate over generations and build and animation from a series of snapshots."""
+        """This function will iterate over generations and build and animation from a series of snapshots.
+
+        Parameters
+
+        ----------
+
+        generations: int
+            number of iterations to run game
+        Cmap: str
+            matplotlib color map string
+        interval: int
+            length of animation interval
+        repeat_delay: int
+            length of repeat delay in movie
+        blit: bool
+            use blitting to speed animation
+        name: str
+            name of the animation
+        export: bool
+            whether or not to save animation as mpg4
+
+        """
         
 
         #intialize a plot object to show the grids as images
